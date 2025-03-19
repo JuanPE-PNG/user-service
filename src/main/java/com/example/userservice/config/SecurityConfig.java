@@ -16,12 +16,12 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/",                // Ruta raíz
-                                "/api/users/**",   // Endpoints de usuarios
-                                "/h2-console/**",  // Consola H2 (por si acaso)
-                                "/static/**",      // Recursos estáticos (CSS, JS, imágenes)
-                                "/error"           // Página de error
-                        ).permitAll() // Todas estas rutas son públicas
+                                "/",
+                                "/api/users/**",
+                                "/h2-console/**",
+                                "/static/**",
+                                "/error"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .headers(headers -> headers

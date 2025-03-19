@@ -12,18 +12,15 @@ public class UserController {
 
     private final UserRepository userRepository;
 
-    // Inyección de dependencias (Spring lo hace automáticamente)
     public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    // Endpoint para obtener todos los usuarios
     @GetMapping
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    // Endpoint para crear un usuario
     @PostMapping
     public User createUser(@RequestBody User user) {
         return userRepository.save(user);
