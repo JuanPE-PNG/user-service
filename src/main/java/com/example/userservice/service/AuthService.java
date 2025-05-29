@@ -5,6 +5,7 @@ import com.example.userservice.repository.UserInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.example.userservice.repository.UserInfoRepository;
 
 @Service
 public class AuthService {
@@ -23,7 +24,9 @@ public class AuthService {
 
     public void validateToken(String token){
         jwtService.validateToken(token);
+
     }
+
     public String generateToken(String userName){
         return jwtService.generateToken(userName);
     }
