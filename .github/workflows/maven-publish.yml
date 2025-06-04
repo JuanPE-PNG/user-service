@@ -18,6 +18,10 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+      - name: Set correct file encoding
+        run: |
+          sudo apt-get install -y dos2unix  # Instala herramienta para limpieza
+          find . -type f -name "*.properties" -exec dos2unix {} \;
 
       - name: Build with Maven
         run: mvn clean package
