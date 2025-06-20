@@ -49,6 +49,36 @@ public class JwtService {
                 .parseClaimsJws(token);
     }
 
+    public boolean isAdminUser(String token) {
+        try {
+            var claims = Jwts.parserBuilder()
+                    .setSigningKey(getSignKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+
+            String username = claims.get("username", String.class);
+            System.out.println("Token username: " + username); // Debug log
+
+            Optional<UserInfo> userOpt = userInfoRepository.findByName(username);
+
+            if (userOpt.isPresent()) {
+                UserInfo user = userOpt.get();
+                System.out.println("User found: " + user.getName() + ", Role: " + user.getRole()); // Debug log
+                return user.getRole() == UserInfo.Role.Administrador;
+            } else {
+                System.out.println("User not found for username: " + username); // Debug log
+            }
+
+            return false;
+        } catch (Exception e) {
+            System.out.println("Error in isAdminUser: " + e.getMessage()); // Debug log
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
     private Key getSignKey(){
         byte[] keyBytes = Decoders.BASE64.decode(SECRET);
         return Keys.hmacShaKeyFor(keyBytes);

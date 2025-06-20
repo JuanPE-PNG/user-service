@@ -26,8 +26,7 @@ public class AuthConfig {
                 .authorizeHttpRequests(auth->auth
                         .requestMatchers("/auth/registerUser","/auth/generateToken","/auth/validateToken")
                         .permitAll()
-                        .requestMatchers("/foos/**").hasRole("TEST")
-                        .requestMatchers("/WRITE/**").hasRole("Administrador")
+                        .requestMatchers("/admin/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .build();
