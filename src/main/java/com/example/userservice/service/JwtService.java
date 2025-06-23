@@ -33,6 +33,7 @@ public class JwtService {
 
         claims.put("id", user.getId());
         claims.put("username", userName);
+        claims.put("role", user.getRole().name());
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -57,20 +58,10 @@ public class JwtService {
                     .parseClaimsJws(token)
                     .getBody();
 
-            String username = claims.get("username", String.class);
-            System.out.println("Token username: " + username); // Debug log
+            String role = claims.get("role", String.class);
+            System.out.println("Token role: " + role); // Debug log
 
-            Optional<UserInfo> userOpt = userInfoRepository.findByName(username);
-
-            if (userOpt.isPresent()) {
-                UserInfo user = userOpt.get();
-                System.out.println("User found: " + user.getName() + ", Role: " + user.getRole()); // Debug log
-                return user.getRole() == UserInfo.Role.Administrador;
-            } else {
-                System.out.println("User not found for username: " + username); // Debug log
-            }
-
-            return false;
+            return "Administrador".equalsIgnoreCase(role);
         } catch (Exception e) {
             System.out.println("Error in isAdminUser: " + e.getMessage()); // Debug log
             e.printStackTrace();

@@ -19,6 +19,16 @@ public class AdminController {
     @Autowired
     private JwtService jwtService;
 
+    @GetMapping("/validateAdmin")
+    public ResponseEntity<String> validateAdmin(@RequestHeader("Authorization") String token) {
+        String jwtToken = token.replace("Bearer ", "");
+        if (jwtService.isAdminUser(jwtToken)) {
+            return ResponseEntity.ok("Admin user validated");
+        } else {
+            return ResponseEntity.status(403).body("User is not an admin");
+        }
+    }
+
     @GetMapping("/users")
     public ResponseEntity<List<UserInfo>> getAllUsers(@RequestHeader("Authorization") String token) {
 
