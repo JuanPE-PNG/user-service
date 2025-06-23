@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/auth")
@@ -19,7 +20,7 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
 
     @PostMapping("/registerUser")
-    public String addUser(@RequestBody UserInfo userInfo){
+    public String addUser(@RequestBody @Valid UserInfo userInfo){
         return authService.addUser(userInfo);
     }
     @PostMapping("/generateToken")
